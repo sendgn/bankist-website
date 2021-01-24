@@ -35,12 +35,29 @@ message.classList.add("cookie-message");
 message.innerHTML =
   'We use cookies for improved functionality and analytics. <button class="btn btn--close-cookie">Got it!';
 
-// add as a child
+// Add as a child
 header.append(message);
 
-// Delete elements
+// Delete element
 document
   .querySelector(".btn--close-cookie")
   .addEventListener("click", function () {
     message.remove();
   });
+
+// Change styles of cookie message
+message.style.backgroundColor = "#37383d";
+message.style.position = "fixed";
+message.style.top = "91.5%";
+message.style.zIndex = "999";
+
+// This reads inline styles only
+console.log(message.style.height); // got nothing
+console.log(message.style.backgroundColor); // got backgroundColor (that inline in the html we added before)
+
+// That's how to read needed style of an element that we didn't define ourselves
+console.log(getComputedStyle(message).color);
+console.log(getComputedStyle(message).height);
+
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height) + 30 + "px";
