@@ -50,14 +50,23 @@ message.style.backgroundColor = "#37383d";
 message.style.position = "fixed";
 message.style.top = "91.5%";
 message.style.zIndex = "999";
-
-// This reads inline styles only
-console.log(message.style.height); // got nothing
-console.log(message.style.backgroundColor); // got backgroundColor (that inline in the html we added before)
-
-// That's how to read needed style of an element that we didn't define ourselves
-console.log(getComputedStyle(message).color);
-console.log(getComputedStyle(message).height);
-
 message.style.height =
   Number.parseFloat(getComputedStyle(message).height) + 30 + "px";
+
+// Smooth scrolling
+const btnScrollTo = document.querySelector(".btn--scroll-to");
+const section1 = document.querySelector("#section--1");
+
+btnScrollTo.addEventListener("click", function (e) {
+  // Scrolling
+  // Oldschool way
+  // const s1coords = section1.getBoundingClientRect();
+  // window.scrollTo({
+  //   left: s1coords.left + window.pageXOffset,
+  //   top: s1coords.top + window.pageYOffset,
+  //   behavior: "smooth",
+  // });
+
+  // Modern way
+  section1.scrollIntoView({ behavior: "smooth" });
+});
