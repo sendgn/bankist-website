@@ -89,6 +89,33 @@ document.querySelector(".nav__links").addEventListener("click", function (e) {
   }
 });
 
+////////////////////////////////////////////////////////////
+// Tabbed component
+const tabs = document.querySelectorAll(".operations__tab");
+const tabsContainer = document.querySelector(".operations__tab-container");
+const tabsContent = document.querySelectorAll(".operations__content");
+
+tabsContainer.addEventListener("click", function (e) {
+  const clicked = e.target.closest(".operations__tab");
+
+  // Guard clause
+  if (!clicked) return;
+
+  // Remove active classes
+  tabs.forEach((tab) => tab.classList.remove("operations__tab--active"));
+  tabsContent.forEach((content) =>
+    content.classList.remove("operations__content--active")
+  );
+
+  // Activate tab
+  clicked.classList.add("operations__tab--active");
+
+  // Activate content area
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add("operations__content--active");
+});
+
 /*
 // EXPERIMENTING
 
@@ -295,4 +322,43 @@ document.querySelector(".nav").addEventListener(
   },
   true // choose capturing phase instead of bubbling phase (optional parameter, noone use it)
 );
+*/
+
+/*
+////////////////////////////////////////////////////////////
+///////////////       DOM TRAVERSING        ////////////////
+////////////////////////////////////////////////////////////
+
+const h1 = document.querySelector("h1");
+
+// Going downwards: child
+console.log(h1.querySelectorAll(".highlight"));
+// all child nodes including comments, text nodes, brs etc.
+console.log(h1.childNodes);
+// only elements, only works for direct children
+console.log(h1.children);
+h1.firstElementChild.style.color = "white";
+h1.lastElementChild.style.color = "crimson";
+
+// Going upwards: parents
+console.log(h1.parentNode);
+console.log(h1.parentElement);
+
+// closest parent element with class .header
+h1.closest(".header").style.background = "var(--gradient-secondary)";
+// the h1 element itself
+h1.closest("h1").style.background = "var(--gradient-primary)";
+
+// Going sideways: siblings
+console.log(h1.previousElementSibling);
+console.log(h1.nextElementSibling);
+
+console.log(h1.previousSibling);
+console.log(h1.nextSibling);
+
+// all siblings not direct
+console.log(h1.parentElement.children);
+[...h1.parentElement.children].forEach(function (el) {
+  if (el !== h1) el.style.transform = "scale(0.5)";
+});
 */
