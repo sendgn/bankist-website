@@ -10,6 +10,7 @@ const nav = document.querySelector(".nav");
 const tabs = document.querySelectorAll(".operations__tab");
 const tabsContainer = document.querySelector(".operations__tab-container");
 const tabsContent = document.querySelectorAll(".operations__content");
+const header = document.querySelector(".header");
 
 ////////////////////////////////////////////////////////////
 // Modal window
@@ -37,7 +38,6 @@ document.addEventListener("keydown", function (e) {
 });
 
 // Add a cookie message
-const header = document.querySelector(".header");
 const message = document.createElement("div");
 message.classList.add("cookie-message");
 message.innerHTML =
@@ -117,7 +117,9 @@ tabsContainer.addEventListener("click", function (e) {
     .classList.add("operations__content--active");
 });
 
+////////////////////////////////////////////////////////////
 // Menu fade animation
+
 const handleHover = function (e) {
   if (e.target.classList.contains("nav__link")) {
     const link = e.target;
@@ -135,6 +137,58 @@ const handleHover = function (e) {
 // the this keyword is now 0.5 or 1
 nav.addEventListener("mouseover", handleHover.bind(0.5));
 nav.addEventListener("mouseout", handleHover.bind(1));
+
+////////////////////////////////////////////////////////////
+// Sticky navigation: 'scroll' event
+
+// const initialCoords = section1.getBoundingClientRect();
+// // bad practice to use 'scroll' event (bad for performance)
+// window.addEventListener("scroll", function () {
+//   if (window.scrollY > initialCoords.top) {
+//     nav.classList.add("sticky");
+//   } else {
+//     nav.classList.remove("sticky");
+//   }
+// });
+
+////////////////////////////////////////////////////////////
+// Sticky navigation: Intersection Observer API
+
+// // The callback fn will get called each time that the observed
+// // element (target) is intersecting the root element at the defined treshold
+// // entries - array of treshold entries
+// const obsCallback = function (entries, observer) {
+//   entries.forEach((entry) => {
+//     console.log(entry);
+//   });
+// };
+
+// const obsOptions = {
+//   // root - element that the target is intersecting with
+//   root: null, // target is intersecting the entire viewport
+//   // threshold - % of intersection at which the observer callback will be called
+//   threshold: [0, 0.2],
+// };
+
+// const observer = new IntersectionObserver(obsCallback, obsOptions);
+// observer.observe(section1);
+
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = function (entries) {
+  const [entry] = entries; // entry[0]
+
+  if (!entry.isIntersecting) nav.classList.add("sticky");
+  else nav.classList.remove("sticky");
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, {
+  root: null,
+  threshold: 0,
+  rootMargin: `-${navHeight}px`, // pixels 'before' the treshold will be reached (height of the navbar)
+});
+
+headerObserver.observe(header);
 
 /*
 // EXPERIMENTING
