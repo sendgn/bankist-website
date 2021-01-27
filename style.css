@@ -420,6 +420,11 @@ h4 {
   cursor: pointer;
 }
 
+.slider__btn__arrow {
+  display: block;
+  margin-top: -10%;
+}
+
 .slider__btn--left {
   left: 6%;
   transform: translate(-50%, -50%);
